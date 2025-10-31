@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery Service</title>
+</head>
+<body>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Why Do We Integrate Courier Delivery Services?</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                Courier delivery integration involves connecting your business system (like Odoo ERP) with external courier service providers (such as Postex) through APIs. This integration automates the shipping process and enables real-time communication between your system and the courier network.
+            </p>
+            <h3>Benefits of Courier Delivery Integration</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                <h6>1. Automated Shipping Process:</h6>
+                Instantly create and confirm shipments from within your ERP system without switching to external
+                platforms.
+
+                <h6>2. Real-Time Tracking:</h6>
+                Automatically receive tracking numbers and delivery status updates, and share them with your customers.
+
+                <h6>3. Faster Order Fulfillment:</h6>
+                Reduce delays by minimizing manual data entry and human error, improving delivery turnaround time.
+
+                <h6>4. Airway Bill/Label Generation:</h6>
+                Generate and print courier-approved shipping labels directly from the sales or delivery screen.
+
+                <h6>5. Improved Customer Experience:</h6>
+                Customers receive timely updates and accurate tracking, which increases trust and satisfaction.
+
+                <h6>6. Centralized Control:</h6>
+                Manage multiple courier services from a single system, compare rates, and choose the best option for
+                each shipment.
+            </p>
+            <h1 class="oe_slogan" style="color:#00AEEF; font-size: 30px; font-weight: bold;">
+                Delivery Postex Integration
+            </h1>
+            <h3>Step 1</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                The Postex integration is designed for streamlined, secure communication with the Postex API. Configuration requires minimal input to authenticate your Odoo instance and define the type of orders to be dispatched via the Postex platform.
+            </p>
+            <img src="api_key.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 2</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                Clicking the button activates the live production environment using the configured API key, enabling real-time communication with the Postex platform.
+            </p>
+            <img src="smart_button.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 3</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                To integrate Postex shipping with a Sales Order, follow these steps:
+
+                1. Create a Sales Order by adding customer details and products.
+
+                2. Click the "Add Shipping" button to open the shipping options.
+
+                3. In the shipping method selection, choose merchant.postex.pk as the shipping service   provider.
+
+                4. After selecting the method, click the "Add" button to apply the shipping method to   the Sales Order.
+            </p>
+            <img src="create_sale_order.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 4</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                After creating a Sales Order, click the "Confirm" button to validate the order. Once confirmed, the system will automatically generate a delivery order, and the "Delivery" smart button will appear at the top of the form.
+            </p>
+            <img src="delivery.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 5</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                After clicking the "Delivery" button, click the "Validate" button to confirm the delivery. Once Next Transfer, a smart button will appear. Click the smart button to proceed with the next transfer or related operation.
+            </p>
+            <img src="validation.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 6</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                Once the courier delivery integration is successfully validated, the system automatically connects with
+                the courier service provider (e.g., Postex) to generate a shipping request.
+                This process triggers the creation of a shipping label, assigns a tracking number, and prepares the
+                delivery for pickup or dispatch.
+            </p>
+            <img src="treking_details.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 7</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                When you click the "Tracking" smart button, the system will open the shipment's real-time tracking page
+                provided by the courier service (e.g., Postex).
+                This allows you to monitor the current delivery status, location, and estimated delivery time of the
+                package directly from within Odoo.
+            </p>
+            <img src="delivery_detail.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+    <section class="oe_container">
+        <div class="oe_row oe_spaced">
+            <h3>Step 8</h3>
+            <p class="oe_slogan" style="font-size: 18px; color: #555;">
+                If the courier delivery has already been validated and you proceed to cancel it, the system will attempt
+                to notify the courier service (e.g., Postex) through the API to cancel the shipment request.
+                Once cancelled, the tracking number and shipping label associated with the delivery will be invalidated,
+                and the delivery order in Odoo will be reset to a draft or cancelled state.
+            </p>
+            <img src="cancel_order.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+            <img src="cancel_postex.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+            <img src="airway_bill.png" alt="Delivery Postex Banner" style="max-width: 100%; height: auto; margin-top: 20px;" />
+        </div>
+    </section>
+</body>
+</html>

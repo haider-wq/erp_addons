@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_delivery_carrier_form_inherit_delivery_postex" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.inherit.delivery.postex</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='destination']" position="before">
+                <page string="Postex Configuration" name="postex_configuration" invisible="delivery_type != 'postex'">
+                    <group>
+                        <group>
+                            <field name="postex_production_api_key" widget="char" password="1" required="delivery_type == 'postex'"/>
+                        </group>
+                        <group>
+                            <field name="postex_orderType" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_package_type_form_inherit_postex" model="ir.ui.view">
+        <field name="name">stock.package.type.forms.inherit.postex</field>
+        <field name="model">stock.package.type</field>
+        <field name="inherit_id" ref="stock.stock_package_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='package_carrier_type']" position='after'>
+                <field name="postex_mail_type" invisible="package_carrier_type != 'postex'" required="package_carrier_type == 'postex'"/>
+            </xpath>
+            <field name="shipper_package_code" position="attributes">
+                <attribute name="invisible" add="package_carrier_type == 'postex'" separator=" or "/>
+            </field>
+        </field>
+    </record>
+</odoo>

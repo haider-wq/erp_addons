@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="op_classroom_view_inherit" model="ir.ui.view">
+            <field name="name">op.classroom.form</field>
+            <field name="model">op.classroom</field>
+            <field name="inherit_id" ref="openeducat_classroom.view_op_classroom_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='asset_management']" position="after">
+                    <page name="class_meeting" string="Meeting">
+                        <field name="meeting_lines" >
+                            <list>
+                                <field name="name"/>
+                                <field name="start"/>
+                                <field name="duration"/>
+                                <field name="recurrency"/>
+                                <field name="location"/>
+                                <field name="google_meet_url"/>
+                                <button name="action_google_meet_url" string="Join Meeting" type="object" class="btn-primary" style ="margin-left: 200px;margin-top: -5px;"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

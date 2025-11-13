@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="op_admission_view_inherit" model="ir.ui.view">
+            <field name="name">op.admission.form</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='register_id']" position="after">
+                    <field name="crm_id" readonly="0" string="Opportunity"/>
+                    <field name="program_id" string="Program"/>
+
+
+                </xpath>
+                <xpath expr="//field[@name='batch_id']" position="replace">
+                    <field name="batch_id"/>
+                </xpath>
+                <xpath expr="//field[@name='register_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='batch_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fees_term_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='middle_name']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='course_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='last_name']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='gender']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='birth_date']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='last_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='middle_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_lead_view_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_create_admission" type="object"
+                            class="oe_stat_button" icon="fa-calendar"
+                            invisible="not id or type == 'lead'">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Application</span>
+                        </div>
+                    </button>
+                </xpath>
+
+                <xpath expr="//group[@name='opportunity_partner']"  position="replace">
+                    <group name="opportunity_partner" invisible="type == 'lead'">
+                        <field name="partner_id"
+                               widget="res_partner_many2one"
+                               string="Contact"
+                               invisible="type != 'lead'"
+                               context="{'res_partner_search_mode': type == 'opportunity' and 'customer' or False,
+                                                                'default_name': contact_name or partner_name,
+                                                                'default_street': street,
+                                                                'default_is_company': type == 'opportunity' and contact_name == False,
+                                                                'default_company_name': type == 'opportunity' and partner_name,
+                                                                'default_street2': street2,
+                                                                'default_city': city,
+                                                                'default_title': title,
+                                                                'default_state_id': state_id,
+                                                                'default_zip': zip,
+                                                                'default_country_id': country_id,
+                                                                'default_function': function,
+
+                                                                'default_email': email_from,
+                                                                'default_user_id': user_id,
+                                                                'default_team_id': team_id,
+                                                                'default_website': website,
+                                                                'default_lang': lang_code,
+                                                                'show_vat': True,
+                                                            }"
+                        />
+                        <field name="is_blacklisted" invisible="1"/>
+                        <field name="partner_is_blacklisted" invisible="1"/>
+                        <field name="phone_blacklisted" invisible="1"/>
+                        <field name="mobile_blacklisted" invisible="1"/>
+                        <field name="email_state" invisible="1"/>
+                        <field name="phone_state" invisible="1"/>
+                        <field name="partner_email_update" invisible="1"/>
+                        <field name="partner_phone_update" invisible="1"/>
+                        <label for="email_from" class="oe_inline"/>
+                        <div class="o_row o_row_readonly">
+                            <button name="mail_action_blacklist_remove" class="fa fa-ban text-danger"
+                                    title="This email is blacklisted for mass mailings. Click to unblacklist."
+                                    type="object" context="{'default_email': email_from}" groups="base.group_user"
+                                    invisible="not is_blacklisted"/>
+                            <field name="email_from" string="Email" widget="email"/>
+                            <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                  title="By saving this change, the customer email will also be updated."
+                                  invisible="not partner_email_update"/>
+                        </div>
+                        <label for="phone" class="oe_inline"/>
+                        <div class="o_row o_row_readonly">
+                            <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                    title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                    type="object" groups="base.group_user"
+                                    invisible="not phone_blacklisted"/>
+                            <field name="phone"/>
+                            <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                  title="By saving this change, the customer phone number will also be updated."
+                                  invisible="not partner_phone_update"/>
+                        </div>
+                        <field name="lost_reason_id" invisible="active"/>
+                        <field name="date_conversion" invisible="1"/>
+                        <field name="user_company_ids" invisible="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='lead_partner']"  position="replace">
+                    <group name="lead_partner" invisible="type == 'opportunity'">
+                        <!-- Preload all the partner's information -->
+                        <field name="is_partner_visible" invisible='1'/>
+                        <field name="partner_id" widget="res_partner_many2one"
+                               context="{
+                                        'default_name': contact_name,
+                                        'default_title': title,
+                                        'default_student_street':student_street,
+                                        'default_student_street2':student_street2,
+                                        'default_student_city':student_city,
+                                        'default_student_state_id':student_state_id,
+                                        'default_student_zip':student_zip,
+                                        'default_student_country_id':student_country_id,
+                                        'default_function': function,
+                                        'default_student_phone':student_phone,
+                                        'default_student_mobile':student_mobile,
+                                        'default_email': email_from,
+                                        'default_user_id': user_id,
+                                        'default_team_id': team_id,
+                                        'default_website': website,
+                                        'default_lang': lang_code,
+                                        'show_vat': True
+                                    }"/>
+                        <field name="partner_name"/>
+                        <label for="student_street" string="Address"/>
+                        <div class="o_address_format">
+                            <field name="student_street" placeholder="Street..." class="o_address_street"/>
+                            <field name="student_street2" placeholder="Street 2..." class="o_address_street"/>
+                            <field name="student_city" placeholder="City" class="o_address_city"/>
+                            <field name="student_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                            <field name="student_zip" placeholder="ZIP" class="o_address_zip"/>
+                            <field name="student_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                        <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                        <field name="lang_active_count" invisible="1"/>
+                        <field name="lang_code" invisible="1"/>
+                        <field name="lang_id" invisible="lang_active_count &lt;= 1"
+                               options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                    </group>
+                </xpath>
+
+
+                <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                    <div class="oe_title">
+                        <h1><field class="text-break" options="{'line_breaks': False}" widget="text" name="name" placeholder="Full Name"/></h1>
+                        <h2 class="row g-0 pb-3 pb-sm-4">
+                            <!--                            <div class="col-auto pb-2 pb-md-0" invisible="type == 'lead'">-->
+                            <!--                                <label for="expected_revenue" class="oe_edit_only"/>-->
+                            <!--                                <div class="d-flex align-items-baseline">-->
+                            <!--                                    <field name="company_currency" invisible="1"/>-->
+                            <!--                                    <field name="expected_revenue" class="o_input_13ch" widget="monetary" options="{'currency_field': 'company_currency'}"/>-->
+                            <!--                                    <span class="oe_grey p-2" groups="crm.group_use_recurring_revenues"> + </span>-->
+                            <!--                                    <span class="oe_grey p-2" groups="!crm.group_use_recurring_revenues"> at </span>-->
+                            <!--                                    <div class="d-flex align-items-baseline gap-3" groups="crm.group_use_recurring_revenues">-->
+                            <!--                                        <field name="recurring_revenue" class="o_input_10ch" widget="monetary" options="{'currency_field': 'company_currency'}"/>-->
+                            <!--                                        <div class="d-flex align-items-baseline">-->
+                            <!--                                            <field name="recurring_plan" class="oe_inline o_input_13ch" placeholder="e.g. &quot;Monthly&quot;" required="recurring_revenue != 0" options="{'no_create': True, 'no_open': True}"/>-->
+                            <!--                                            <span class="oe_grey p-2 text-nowrap"> at </span>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-auto">-->
+                            <!--                                <label for="probability" class="d-inline-block"/>-->
+                            <!--                                <button class="d-inline-block px-2 py-0 btn btn-link" name="action_set_automated_probability" type="object" invisible="is_automated_probability">-->
+                            <!--                                    <i class="fa fa-gear" role="img" title="Switch to automatic probability" aria-label="Switch to automatic probability"/>-->
+                            <!--                                </button>-->
+                            <!--                                <small class="d-inline-block oe_grey h6 mb-0" invisible="is_automated_probability">-->
+                            <!--                                    <field class="mb-0" name="automated_probability" force_save="1"/> %-->
+                            <!--                                </small>-->
+                            <!--                                <div id="probability" class="d-flex align-items-baseline">-->
+                            <!--                                    <field name="is_automated_probability" invisible="1"/>-->
+                            <!--                                    <field name="probability" widget="float" class="oe_inline o_input_6ch"/>-->
+                            <!--                                    <span class="oe_grey p-2"> %</span>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                        </h2>
+                    </div>
+                </xpath>
+
+                <!--                 <xpath expr="//page[@name='lead']" position="attributes">-->
+                <!--                     <attribute name="string">Vendor Information</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+
+<!--                <xpath expr="//field[@id='phone_group_lead_info']" position="replace">-->
+<!--                    <field name="student_phone" required="1" string="Phone" id="phone_group_lead_info"  widget="phone"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//group[@name='lead_info']" position="replace">
+                    <group name="lead_info" invisible="type == 'opportunity'">
+                                <label for="contact_name"/>
+                                <div class="o_row">
+                                    <field name="contact_name"/>
+                                    <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                                </div>
+                                <field name="is_blacklisted" invisible="1"/>
+                                <field name="phone_blacklisted" invisible="1"/>
+                                <field name="email_state" invisible="1"/>
+                                <field name="phone_state" invisible="1"/>
+                                <field name="partner_email_update" invisible="1"/>
+                                <field name="partner_phone_update" invisible="1"/>
+                                <label for="email_from_group_lead_info" class="oe_inline"/>
+                                <div class="o_row o_row_readonly">
+                                    <button name="mail_action_blacklist_remove" class="fa fa-ban text-danger"
+                                        title="This email is blacklisted for mass mailings. Click to unblacklist."
+                                        type="object" context="{'default_email': email_from}" groups="base.group_user"
+                                        invisible="not is_blacklisted"/>
+                                    <field name="email_from" id="email_from_group_lead_info" string="Email" widget="email"/>
+                                    <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                        title="By saving this change, the customer email will also be updated."
+                                        invisible="not partner_email_update"/>
+                                </div>
+                                <field name="email_cc" groups="base.group_no_one"/>
+                                <field name="function"/>
+                                 <field name="lead_source" string="Lead Source"/>
+                                <label for="phone_group_lead_info" class="oe_inline"/>
+                                <div class="o_row o_row_readonly">
+                                    <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                        title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                        type="object" context="{'default_phone': phone}" groups="base.group_user"
+                                        invisible="not phone_blacklisted"/>
+                                    <field name="student_phone" required="1" string="Phone" id="phone_group_lead_info" widget="phone"/>
+                                    <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                        title="By saving this change, the customer phone number will also be updated."
+                                        invisible="not partner_phone_update"/>
+                                </div>
+                                <label for="student_mobile" class="oe_inline"/>
+                                <div class="o_row o_row_readonly">
+                                    <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                        title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                        type="object" context="{'default_phone': mobile}" groups="base.group_user"
+                                        invisible="not mobile_blacklisted"/>
+                                    <field name="student_mobile" required="1" widget="phone" string="Mobile"/>
+                                </div>
+                            </group>
+                </xpath>
+
+                 <xpath expr="//field[@name='phone']" position="replace">
+                    <field name="phone" invisible="1"/>
+                </xpath>
+                 <xpath expr="//field[@name='email_from']" position="after">
+                     <group>
+                         <field name="student_phone" readonly="0" string="Phone"/>
+                         <field name="student_mobile" readonly="0" string="Mobile"/>
+
+                     </group>
+
+                </xpath>
+                 <xpath expr="//group[hasclass('mt48')]" position="replace">
+                      <group class="mt48">
+                                        <label for="contact_name_page_lead"/>
+                                        <div class="o_row">
+                                            <field name="contact_name" id="contact_name_page_lead"/>
+                                            <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                                        </div>
+                                        <field name="function"/>
+                                        <label for="mobile_page_lead" class="oe_inline"/>
+                                        <div class="o_row o_row_readonly">
+                                            <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                                title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                                type="object" context="{'default_phone': mobile}" groups="base.group_user"
+                                                invisible="not mobile_blacklisted"/>
+                                            <field name="mobile" invisible="1" id="mobile_page_lead" widget="phone"/>
+                                        </div>
+                                    </group>
+
+                </xpath>
+
+
+
+
+
+                <!--                <xpath expr="//field[@name='phone']" position="after">-->
+                <!--                    <field name="mobile"  id="mobile_page_lead" widget="phone"/>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <label for="street_page_lead" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="student_street" id="street_page_lead" placeholder="Street..." class="o_address_street"/>
+                        <field name="student_street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="student_city" placeholder="City" class="o_address_city"/>
+                        <field name="student_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="student_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="student_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+
+                </xpath>
+
+                <xpath expr="//field[@id='contact_name_page_lead']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='lead']" position="replace">
+                    <page name="lead" string="Vendor Information" invisible="type == 'lead'">
+                        <group>
+                            <group string="Vendor Information">
+                                <field name="partner_name"/>
+
+                                <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                                <field name="lang_active_count" invisible="1"/>
+                                <field name="lang_id" invisible="lang_active_count &lt;= 1"
+                                       options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                            </group>
+                            <group class="mt48">
+                                <label for="contact_name_page_lead"/>
+                                <div class="o_row">
+                                    <field name="contact_id" string="Primary Contact" id="contact_name_page_lead"/>
+
+                                    <!--                                    <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>-->
+                                </div>
+
+
+                                <!--                                <field name="function"/>-->
+                                <label for="mobile_page_lead" class="oe_inline"/>
+                                <div class="o_row o_row_readonly">
+                                    <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                            title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                            type="object" context="{'default_phone': mobile}" groups="base.group_user"
+                                            invisible="not mobile_blacklisted"/>
+                                    <field name="mobile" invisible="1" id="mobile_page_lead" widget="phone"/>
+                                </div>
+                            </group>
+
+                            <group class="mt48">
+                                <field name="vendor_phone" string="Phone" />
+                                <field name="vendor_mobile" string="Mobile" />
+                                <field name="vendor_street" string="Street"  />
+                                <field name="vendor_street2" string="Street2" />
+                                <field name="vendor_email" string="Email" />
+                                <field name="vendor_city" string="City" />
+                                <field name="vendor_zip" string="Zip" />
+                                <field name="vendor_state_id" string="State" />
+                                <field name="vendor_country_id" string="Country" />
+                            </group>
+                            <group string="Marketing">
+                                <field name="medium_id" />
+                                <field name="source_id" />
+                                <field name="referred"/>
+                            </group>
+                            <group string="Tracking" name="Misc">
+                                <field name="company_id"
+                                       groups="base.group_multi_company"
+                                       options="{'no_create': True}"/>
+                                <field name="team_id" options="{'no_open': True, 'no_create': True}" context="{'kanban_view_ref': 'sales_team.crm_team_view_kanban'}"/>
+                                <field name="day_open" />
+                                <field name="day_close"/>
+                                <field name="type" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+
+                </xpath>
+
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Academics" name="academics" invisible="type == 'lead'">
+                        <group>
+                            <field name="class_attendance" string="Class Attendance"/>
+                        </group>
+                    </page>
+                    <page string="Admission" name="Admission" invisible="type == 'lead'">
+                        <group>
+                            <field name="orientation_attended" string="Orientation Attended"/>
+                            <field name="govt_id" string="Govt ID"/>
+                            <field name="student_badge" string="Student Badge"/>
+                            <field name="english_proficiency_proof" string="English Proficiency Proof"/>
+                            <field name="contract_signature" string="Contract and Signature"/>
+                            <field name="sif" string="SIF"/>
+                            <field name="sle" string="SLE"/>
+                        </group>
+                    </page>
+                    <page string="Account" name="Account" invisible="type == 'lead'">
+                        <group>
+                            <field name="laptop_allowance" string="Laptop Allowance"/>
+                            <field name="deposit" string="EFT DIRECT DEPOSIT DOCUMENT"/>
+                        </group>
+
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_name']" position="replace">
+                </xpath>
+
+                <xpath expr="//field[@name='function']" position="replace">
+                </xpath>
+
+                <xpath expr="//field[@name='email_cc']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='contact_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='lead_priority']" position="replace">
+                    <group name="lead_priority" invisible="type == 'opportunity'">
+                        <field name="priority" widget="priority"/>
+                        <!--                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>-->
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='contact_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='phone']" position="attributes">-->
+<!--                    <attribute name="required">1</attribute>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//field[@name='mobile']" position="attributes">-->
+<!--                    <attribute name="required">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="program_id" string="Program"/>
+                    <field name="lead_source" />
+                </xpath>
+
+                <xpath expr="//field[@name='email_cc']" position="before">
+                    <field name="owner_id" string="Primary Contact"/>
+                    <!--                    <field name="last_name" string="Last Name"/>-->
+                    <field name="Location" string="Location"/>
+                    <field name="program_id" string="Program"/>
+                    <field name="residance_status" string="Residence Status"/>
+                    <field name="lead_source" string="Lead Source"/>
+                    <field name="asn" string="ASN #"/>
+
+                </xpath>
+
+
+
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="string">Vendor Name</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="partner_inherit" model="ir.ui.view">
+            <field name="name">exam.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <!--                    <field name="last_name" />-->
+                </xpath>
+                <xpath expr="//field[@name='function']" position="after">
+                    <field name="program_id" invisible="company_type != 'person'" />
+
+
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <label for="primary_contact" string="Primary Contact" class="o_form_label"/>
+                    <field name="primary_contact" readonly="0" />
+                </xpath>
+
+                <xpath expr="//field[@name='street']" position="after">
+                     <field name="is_student_address" invisible="1"/>
+                    <field name="student_street" placeholder="street" invisible="not is_student_address"/>
+                    <field name="student_street2" placeholder="street" invisible="not is_student_address"/>
+                    <field name="student_zip" placeholder="Zip" invisible="not is_student_address"/>
+                    <field name="student_city" placeholder="City" invisible="not is_student_address"/>
+                    <field name="student_state_id" placeholder="State" invisible="not is_student_address"/>
+                    <field name="student_country_id" placeholder="Country" invisible="not is_student_address"/>
+                </xpath>
+<!--                 <xpath expr="//field[@name='mobile']" position="after">-->
+<!--                     <field name="student_mobile" placeholder="Mobile" invisible="not is_student_address"/>-->
+<!--                 </xpath>-->
+
+
+                 <xpath expr="//field[@name='street']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+                <xpath expr="//field[@name='street2']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+                <xpath expr="//field[@name='zip']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='state_id']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+                  <xpath expr="//field[@name='country_id']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+                  <xpath expr="//field[@name='city']" position="attributes">
+                     <attribute name="invisible">is_student_address</attribute>
+                </xpath>
+<!--                 <xpath expr="//field[@name='mobile']" position="attributes">-->
+<!--                     <attribute name="invisible">is_student_address</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">company_type != 'person'</attribute>
+                </xpath>
+
+
+
+                <field name="company_type" position="replace">
+                    <div>
+                        <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                        <field name="is_owner" class="ml16"/>
+                        <label for="is_owner" class="mr16"/>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <record id="kanban_view_student_inherit" model="ir.ui.view">
+            <field name="name">Student Kanban (Disable Create)</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.kanban_view_student"/> <!-- Change this to actual module if needed -->
+            <field name="arch" type="xml">
+                <kanban position="attributes">
+                    <attribute name="create">false</attribute>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="tree_view_student_inherit" model="ir.ui.view">
+            <field name="name">Student Kanban (Disable Create)</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_tree"/> <!-- Change this to actual module if needed -->
+            <field name="arch" type="xml">
+                <list position="attributes">
+                    <attribute name="create">false</attribute>
+                </list>
+
+            </field>
+        </record>
+
+        <record id="form_view_student_inherit" model="ir.ui.view">
+            <field name="name">Student Form (Disable Create)</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_form"/> <!-- Replace if needed -->
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="create">false</attribute>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_op_batch_form_inherit" model="ir.ui.view">
+            <field name="name">op.batch.form</field>
+            <field name="model">op.batch</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_batch_form"/> <!-- Replace if needed -->
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='course_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='course_id']" position="after">
+                    <field name="program_id"/>
+
+                </xpath>
+
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Courses" name="program_courses">
+                            <field name="courses_line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" readonly="0"/>
+                                    <field name="course_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+
+
+
+            </field>
+        </record>
+
+
+
+
+
+
+
+    </data>
+</odoo>

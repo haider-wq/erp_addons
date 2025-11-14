@@ -189,7 +189,7 @@ class Postex:
             'customerName': picking.partner_id.name,
             'customerPhone': picking.partner_id.phone,
             'deliveryAddress': f"{picking.partner_id.street_number} {picking.partner_id.street} {picking.partner_id.street2} {picking.partner_id.street_name} {picking.partner_id.city} {picking.partner_id.country_id.name}",
-            'cityName': self._get_postex_city(picking.partner_id.city),
+            'cityName': self._get_postex_city(picking.partner_id),
             'invoiceDivision': 0,
             'pickupAddressCode': '001',
             'invoicePayment': math.ceil(picking.sale_id.amount_total),

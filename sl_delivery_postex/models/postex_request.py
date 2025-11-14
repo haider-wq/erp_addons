@@ -191,7 +191,7 @@ class Postex:
             'deliveryAddress': f"{picking.partner_id.street_number} {picking.partner_id.street} {picking.partner_id.street2} {picking.partner_id.street_name} {picking.partner_id.city} {picking.partner_id.country_id.name}",
             'cityName': self._get_postex_city(picking.partner_id),
             'invoiceDivision': 0,
-            'pickupAddressCode': '004',
+            'pickupAddressCode': '001',
             'invoicePayment': math.ceil(picking.sale_id.amount_total),
             'items': int(sum(picking.move_ids.mapped('quantity'))),
             'orderType': self.carrier.postex_orderType

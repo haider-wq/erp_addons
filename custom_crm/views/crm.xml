@@ -343,7 +343,8 @@
                     <page name="lead" string="Vendor Information" invisible="type == 'lead'">
                         <group>
                             <group string="Vendor Information">
-                                <field name="partner_name"/>
+                                <field name="company_id" invisible="1"/>
+                                 <field name="erp_company_id" string="Company"/>
 
                                 <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
                                 <field name="lang_active_count" invisible="1"/>

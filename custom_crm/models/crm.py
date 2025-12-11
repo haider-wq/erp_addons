@@ -143,6 +143,10 @@ class PartnerInherit(models.Model):
 
     last_name = fields.Char()
     program_id = fields.Many2one('op.program')
+    record_type = fields.Selection(
+        [('a', 'Administrative'),('b', 'Academic Program'),('c', 'Business Organization'),('d', 'Career Services'),('e', 'Customer'),('f', 'Educational Institution'),('g','Household Account'),('h','Sports Organization'),('i', 'University Department'),('g','Vendor')],
+        string='Gender',
+        required=False)
     is_owner = fields.Boolean()
     student_mobile = fields.Char()
     is_student_address = fields.Boolean(default=False)

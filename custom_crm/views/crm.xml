@@ -517,9 +517,7 @@
                 <xpath expr="//field[@name='name']" position="after">
                     <label for="primary_contact" string="Primary Contact" class="o_form_label"/>
                     <field name="primary_contact" readonly="0" />
-                    <br></br>
-                     <label for="record_type" string="Record Type" class="o_form_label"/>
-                     <field name="record_type" string="Record Type" />
+                    
 
 
                 </xpath>

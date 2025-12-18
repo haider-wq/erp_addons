@@ -484,7 +484,7 @@
                     <field name="Location" string="Location"/>
                     <field name="program_id" string="Program"/>
                     <field name="residance_status" string="Residence Status"/>
-                    <field name="lead_source" string="Lead Source"/>
+<!--                    <field name="lead_source" string="Lead Source"/>-->
                     <field name="asn" string="ASN #"/>
 
                 </xpath>

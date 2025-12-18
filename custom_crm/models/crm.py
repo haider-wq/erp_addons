@@ -278,7 +278,7 @@ class CalendarEvent(models.Model):
     Location = fields.Char()
     program_id = fields.Many2one('op.program')
     residance_status = fields.Selection([('a','I am a Citizen or Permanent Resident'),('b','I am an International Student'),('c','I am a Refugee'),('d','I am a Work Permit Holder'),('e','I have a Visitor Visa')])
-    lead_source = fields.Selection([('a','Website'),('b','Internal Employee'),('c','Ambassador'),('d','Business Listing'),('e','Social Media'),('f','Facebook'),('g','LinkedIn'),('h','Email'),('f','Google'),('g','Word of mouth'),('h','Employee Referral'),('i','Partner'),('j','Walk-in'),('k','Web'),('l','CTI')])
+    lead_source = fields.Selection([('a','Website'),('b','Internal Employee'),('c','Ambassador'),('d','Business Listing'),('e','Social Media'),('f','Facebook'),('g','LinkedIn'),('h','Email'),('i','Google'),('j','Word of mouth'),('k','Employee Referral'),('l','Partner'),('m','Walk-in'),('n','Web'),('o','CTI'),('p','Other'),('q','Trade Show'),('r','Advertisement')])
     asn = fields.Char()
     student_city = fields.Char()
     email = fields.Char(compute='_compute_student_email_info')

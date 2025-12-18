@@ -144,7 +144,7 @@ class PartnerInherit(models.Model):
     last_name = fields.Char()
     program_id = fields.Many2one('op.program')
     record_type = fields.Selection(
-        [('a', 'Administrative'),('b', 'Academic Program'),('c', 'Business Organization'),('d', 'Career Services'),('e', 'Customer'),('f', 'Educational Institution'),('g','Household Account'),('h','Sports Organization'),('i', 'University Department'),('g','Vendor')],
+        [('a', 'Administrative'),('b', 'Academic Program'),('c', 'Business Organization'),('d', 'Career Services'),('e', 'Customer'),('f', 'Educational Institution'),('g','Household Account'),('h','Sports Organization'),('i', 'University Department'),('j','Vendor'),('k','Advertisement'),('l','Partner'),('m','Website'),('n','ERP College')],
         string='Record type',
         required=False)
     is_owner = fields.Boolean()
